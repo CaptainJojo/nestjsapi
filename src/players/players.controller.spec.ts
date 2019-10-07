@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PlayersController } from './players.controller';
 import { PlayersService } from './players.service';
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, HttpModule } from '@nestjs/common';
 
 describe('Players Controller', () => {
   let controller: PlayersController;
@@ -9,6 +9,7 @@ describe('Players Controller', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [HttpModule],
       controllers: [PlayersController],
       providers: [PlayersService],
     }).compile();
@@ -22,20 +23,20 @@ describe('Players Controller', () => {
   });
 
   describe('route', () => {
-    it('should return players', () => {
+    it('should return players', async () => {
 
       const result = [{ 'id': 2 }, { 'id': 1 }];
-      jest.spyOn(service, 'findAll').mockImplementation(() => result);
+      jest.spyOn(service, 'findAll').mockImplementation(() => Promise.resolve(result));
 
-      expect(controller.findAll()).toBe(result);
+      expect(await controller.findAll()).toBe(result);
     });
 
-    it('should return one player', () => {
+    it('should return one player', async () => {
 
       const result = { 'id': 2 };
-      jest.spyOn(service, 'findOne').mockImplementation(() => result);
+      jest.spyOn(service, 'findOne').mockImplementation(() => Promise.resolve(result));
 
-      expect(controller.findOne(2)).toBe(result);
+      expect(await controller.findOne(2)).toBe(result);
     });
   });
 });

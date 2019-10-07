@@ -12,8 +12,8 @@ export class PlayersController {
     }
 
     @Get(':id')
-    findOne(@Param() params): {} {
-        const res = this.playersService.findOne(params.id);
+    async findOne(@Param() params): Promise<{}> {
+        const res = await this.playersService.findOne(params.id);
 
         if (!res) {
             throw new NotFoundException;
