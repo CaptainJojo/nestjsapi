@@ -1,13 +1,20 @@
-import { Injectable } from '@nestjs/common';
-import data from '../headtohead.json';
+import { Injectable, HttpService } from '@nestjs/common';
 
 @Injectable()
 export class PlayersService {
-    findAll(): {} {
-        return data.players.sort((a, b) => (a.id > b.id) ? 1 : -1);
+
+    constructor(private readonly httpService: HttpService) { }
+    getOnApi(): any {
+        return this.httpService.get('https://eurosportdigital.github.io/eurosport-node-developer-recruitment/headtohead.json').toPromise();
     }
 
-    findOne(id): {} {
-        return data.players.find((a) => { return a.id == id });
+    async findAll(): Promise<{}> {
+        const response = await this.getOnApi();
+        return response.data.players.sort((a, b) => (a.id > b.id) ? 1 : -1);
+    }
+
+    async findOne(id): Promise<{}> {
+        const response = await this.getOnApi();
+        return response.data.players.find((a) => { return a.id == id });
     }
 }
