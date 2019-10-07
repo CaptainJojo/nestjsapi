@@ -60,6 +60,26 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Deploy
+
+The project use GCP with AppEngine
+
+To deploy you need to follow this [documentation](https://cloud.google.com/appengine/docs/standard/nodejs/).
+
+```bash
+$ npm run build
+```
+
+```bash
+$ gcloud init
+```
+
+```bash
+$ gcloud app deploy
+```
+
+My deploy Url is [https://nestjs-255215.appspot.com](https://nestjs-255215.appspot.com)
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
